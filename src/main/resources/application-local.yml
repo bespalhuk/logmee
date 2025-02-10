@@ -1,0 +1,16 @@
+---
+server:
+  shutdown: graceful
+  port: 8080
+
+spring:
+  application:
+    name: logmee
+  main:
+    allow-bean-definition-overriding: true
+  jackson:
+    default-property-inclusion: non_null
+  data:
+    mongodb:
+      auto-index-creation: true
+      uri: mongodb://admin:password@localhost:27017/logmee?authSource=admin

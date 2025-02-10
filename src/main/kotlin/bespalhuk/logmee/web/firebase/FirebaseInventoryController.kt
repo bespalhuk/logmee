@@ -1,6 +1,6 @@
 package bespalhuk.logmee.web.firebase
 
-import bespalhuk.logmee.service.AuthService
+import bespalhuk.logmee.service.AuthenticationService
 import bespalhuk.logmee.service.inventory.InventoryService
 import bespalhuk.logmee.web.inventory.InventoryRequest
 import bespalhuk.logmee.web.inventory.InventoryResponse
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/firebase/users")
+@RequestMapping("/api/users")
 class FirebaseInventoryController(
-    private val authService: AuthService,
+    private val authenticationService: AuthenticationService,
     private val inventoryService: InventoryService,
 ) {
 
@@ -25,7 +25,7 @@ class FirebaseInventoryController(
         @PathVariable("idUser") idUser: String,
         @RequestBody request: InventoryRequest
     ): InventoryResponse {
-        val idAuth = authService.getAuthId()
+        val idAuth = authenticationService.getAuthId()
         return inventoryService.add(
             request.toInput(
                 idUser,
@@ -38,7 +38,7 @@ class FirebaseInventoryController(
     fun find(
         @PathVariable("idUser") idUser: String,
     ): InventoryResponse {
-        val idAuth = authService.getAuthId()
+        val idAuth = authenticationService.getAuthId()
         return inventoryService.find(
             idUser,
             idAuth,

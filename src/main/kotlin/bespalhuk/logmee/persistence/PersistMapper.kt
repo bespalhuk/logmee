@@ -8,8 +8,6 @@ import bespalhuk.logmee.service.user.User
 fun User.toDocument(
 ) = UserDocument(
     id = id,
-    createdDate = createdDate,
-    lastModified = lastModified,
     idAuth = idAuth,
     username = username,
 )
@@ -17,8 +15,6 @@ fun User.toDocument(
 fun UserDocument.toDomain(
 ) = User(
     id = id,
-    createdDate = createdDate,
-    lastModified = lastModified,
     idAuth = idAuth,
     username = username,
 )
@@ -26,8 +22,6 @@ fun UserDocument.toDomain(
 fun Inventory.toDocument(
 ) = InventoryDocument(
     id = id,
-    createdDate = createdDate,
-    lastModified = lastModified,
     idUser = idUser,
     items = items,
 )
@@ -35,8 +29,6 @@ fun Inventory.toDocument(
 fun InventoryDocument.toDomain(
 ) = Inventory(
     id = id,
-    createdDate = createdDate,
-    lastModified = lastModified,
     idUser = idUser,
     items = items,
 )

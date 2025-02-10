@@ -1,6 +1,6 @@
 package bespalhuk.logmee.web.firebase
 
-import bespalhuk.logmee.service.AuthService
+import bespalhuk.logmee.service.AuthenticationService
 import bespalhuk.logmee.service.user.UserService
 import bespalhuk.logmee.web.toInput
 import bespalhuk.logmee.web.toResponse
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/firebase/users")
+@RequestMapping("/api/users")
 class FirebaseUserController(
-    private val authService: AuthService,
+    private val authenticationService: AuthenticationService,
     private val userService: UserService,
 ) {
 
@@ -26,7 +26,7 @@ class FirebaseUserController(
     fun create(
         @RequestBody request: UserRequest
     ): UserResponse {
-        val idAuth = authService.getAuthId()
+        val idAuth = authenticationService.getAuthId()
         return userService.save(
             request.toInput(idAuth)
         ).toResponse()
@@ -37,7 +37,7 @@ class FirebaseUserController(
     fun find(
         @PathVariable("id") id: String
     ): UserResponse {
-        val idAuth = authService.getAuthId()
+        val idAuth = authenticationService.getAuthId()
         return userService.find(
             id,
             idAuth,

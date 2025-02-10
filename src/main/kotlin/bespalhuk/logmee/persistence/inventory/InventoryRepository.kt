@@ -5,6 +5,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface InventoryRepository : MongoRepository<InventoryDocument, String> {
-
     fun findByIdUser(idUser: String): InventoryDocument?
 }

@@ -1,46 +1,43 @@
-package bespalhuk.logmee.web.firebase
+package bespalhuk.logmee.web.user
 
 import bespalhuk.logmee.service.AuthenticationService
-import bespalhuk.logmee.service.inventory.InventoryService
-import bespalhuk.logmee.web.inventory.InventoryRequest
-import bespalhuk.logmee.web.inventory.InventoryResponse
+import bespalhuk.logmee.service.user.UserService
 import bespalhuk.logmee.web.toInput
 import bespalhuk.logmee.web.toResponse
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/users")
-class FirebaseInventoryController(
+class UserController(
     private val authenticationService: AuthenticationService,
-    private val inventoryService: InventoryService,
+    private val userService: UserService,
 ) {
 
-    @PostMapping("/{idUser}/inventory")
-    fun add(
-        @PathVariable("idUser") idUser: String,
-        @RequestBody request: InventoryRequest
-    ): InventoryResponse {
+    @PostMapping
+    fun create(
+        @RequestBody request: UserRequest
+    ): UserResponse {
         val idAuth = authenticationService.getAuthId()
-        return inventoryService.add(
-            request.toInput(
-                idUser,
-                idAuth,
-            )
+        return userService.save(
+            request.toInput(idAuth)
         ).toResponse()
     }
 
-    @GetMapping("/{idUser}/inventory")
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     fun find(
-        @PathVariable("idUser") idUser: String,
-    ): InventoryResponse {
+        @PathVariable("id") id: String
+    ): UserResponse {
         val idAuth = authenticationService.getAuthId()
-        return inventoryService.find(
-            idUser,
+        return userService.find(
+            id,
             idAuth,
         ).toResponse()
     }
